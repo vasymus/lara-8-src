@@ -1,5 +1,7 @@
 ### Laravel Project with structure based on Laravel Beyond CRUD
 
+Clone the project.
+
 Run:
 ```
 git clone git@github.com:vasymus/docker.git ./docker
@@ -10,8 +12,8 @@ cp ./.env.example cp .env
 ```
 
 Set environment variables.
-Then run:
 
+Run:
 ```
 docker-compose up -d --build
 ```
