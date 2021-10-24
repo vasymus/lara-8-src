@@ -5,7 +5,6 @@
 .idea
 .editorconfig
 /bootstrap/cache
-!/bootstrap/cache/.gitignore
 /database/*.sqlite*
 *Dockerfile*
 #**/*Dockerfile*
