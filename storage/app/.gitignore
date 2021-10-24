@@ -1,3 +1,7 @@
 *
 !public/
+!public/persistent/
+!public/persistent/**
+!persistent/
+!persistent/**
 !.gitignore
