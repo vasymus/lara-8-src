@@ -29,10 +29,10 @@ services:
         build:
             context: .
             dockerfile: docker/app/Dockerfile
+            target: dev
         volumes:
             # used delegated mode here on docker for mac for faster disk I/O
-            # TODO
-            - ./public:/var/www/html/public:delegated
+            - .:/var/www/html:delegated
         extra_hosts:
             - "host.docker.internal:host-gateway"
         environment:
@@ -52,7 +52,6 @@ services:
     ### DB (MariaDB) ###
     db:
         image: mariadb:10.6.4
-        restart: always
         volumes:
             - mariadb-db-data:/var/lib/mysql
         environment:
@@ -149,7 +148,6 @@ services:
     # need for mailhog storage
     mongo:
         image: mongo:5.0.3-focal
-        restart: always
         volumes:
             - mongo-mail-data:/data/db
         environment:
