@@ -4,14 +4,13 @@
 .vscode
 .idea
 .editorconfig
-/bootstrap/cache
+/bootstrap/cache/*
 /database/*.sqlite*
 *Dockerfile*
 #**/*Dockerfile*
 *docker-compose*
 *docker-stack*
 # for build the vendor and node_modules in the image, and not copy from host
-/vendor
 /node_modules
 /public/hot
 /public/storage
@@ -19,11 +18,12 @@
 # ignore everything from storage
 # except for storage/app/persistent and storage/app/public/persistent
 # should be adjusted for concrete project if need
-/storage/**
 !/storage/app/persistent/
-!/storage/app/persistent/**
 !/storage/app/public/persistent/
-!/storage/app/public/persistent/**
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
 .env
 .env.backup
 .phpunit.result.cache
