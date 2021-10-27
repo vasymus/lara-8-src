@@ -35,6 +35,13 @@ return [
     */
 
     'channels' => [
+        'stack-std' => [
+            'driver' => 'stack',
+            'channels' => ['stderr'],
+            'level' => 'debug',
+            'ignore_exceptions' => false,
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],
