@@ -34,6 +34,7 @@ services:
             # used delegated mode here on docker for mac for faster disk I/O
             - .:/var/www/html:delegated
         extra_hosts:
+            # is used for xdebug
             - "host.docker.internal:host-gateway"
         environment:
             # change .env XDEBUG_TRIGGER to use other then 'PHPSTORM'
