@@ -20,6 +20,9 @@
 # should be adjusted for concrete project if need
 !/storage/app/persistent/
 !/storage/app/public/persistent/
+/storage/logs/*
+/storage/media-library/temp/*
+/storage/debugbar/*
 /storage/framework/cache/data/*
 /storage/framework/sessions/*
 /storage/framework/testing/*
