@@ -1,28 +1,27 @@
-## TODO
 ## use only app, db, redis and traeffic as proxy
 ## think of creating docker-stack-staging.yml -- with also mailhog and redis webui
 version: '3.9'
 
 services:
     ### Reverse-Proxy (traefik) ###
-    proxy:
-        image: traefik:2.5.3
-        ports:
-            # The HTTP port
-            - 80:80
-        volumes:
-            # So that Traefik can listen to the Docker events
-            - /var/run/docker.sock:/var/run/docker.sock
+#    proxy:
+#        image: traefik:2.5.3
+#        ports:
+#            # The HTTP port
+#            - 80:80
+#        volumes:
+#            # So that Traefik can listen to the Docker events
+#            - /var/run/docker.sock:/var/run/docker.sock
 
     ### APP (php-fpm) ###
     app:
-        image: "vasymus/lara-8-src:${IMAGE_TAG}"
+        image: vasymus/lara-8-src:bd6d2caf
         environment:
-            - APP_NAME=${APP_NAME}
+            - APP_NAME="Lara 8 Src"
             - APP_KEY_FILE=/run/secrets/app_key
-            - APP_URL=${APP_URL}
+            - APP_URL=http://104.248.206.54
             - DB_HOST=db
-            - DB_DATABASE=${DOCKER_DB_NAME}
+            - DB_DATABASE=laravel
             - DB_USERNAME_FILE=/run/secrets/db_user
             - DB_PASSWORD_FILE=/run/secrets/db_password
             - CACHE_DRIVER=redis
@@ -31,18 +30,20 @@ services:
             - SESSION_DRIVER=database
             - REDIS_HOST=redis
             - MAIL_MAILER=mailgun
-            - MAILGUN_DOMAIN=${MAILGUN_DOMAIN}
+            - MAILGUN_DOMAIN=sandbox58036c177c6747d283d0266ec588a124.mailgun.org
             - MAILGUN_SECRET_FILE=/run/secrets/mailgun_secret
             - MAILGUN_ENDPOINT=api.mailgun.net
             - MAIL_FROM_ADDRESS=null
-            - MAIL_FROM_NAME=${APP_NAME}
+            - MAIL_FROM_NAME="Lara 8 Src"
         secrets:
             - db_user
             - db_password
             - app_key
             - mailgun_secret
+        ports:
+            - 80:80
         labels:
-            - traefik.http.routers.app.rule=Host(`${DOCKER_SERVER_NAME:-localhost}`)
+            - traefik.http.routers.app.rule=Host(`104.248.206.54`)
             - traefik.http.services.app.loadbalancer.server.port=80
             #- traefik.http.routers.blog.tls=true
             #- traefik.http.routers.blog.tls.certresolver=lets-encrypt
@@ -65,7 +66,7 @@ services:
             - MYSQL_ROOT_PASSWORD_FILE=/run/secrets/db_root_password
             - MYSQL_USER_FILE=/run/secrets/db_user
             - MYSQL_PASSWORD_FILE=/run/secrets/db_password
-            - MYSQL_DATABASE=${DOCKER_DB_NAME}
+            - MYSQL_DATABASE=laravel
             # didn't want to add any bind mount or additional Dockerfile, so put it to env variable
             # $$ is used for escaping from docker-compose @see https://docs.docker.com/compose/environment-variables/#substitute-environment-variables-in-compose-files
             # Init script will be run ONLY on first initialization
