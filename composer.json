@@ -12,7 +12,8 @@
         "laravel/framework": "^8.71",
         "laravel/tinker": "^2.6",
         "spatie/data-transfer-object": "^3.7.2",
-        "spatie/period": "^2.3"
+        "spatie/period": "^2.3",
+      "ext-json": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

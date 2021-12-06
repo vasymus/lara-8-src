@@ -48,6 +48,8 @@ services:
             #- traefik.http.routers.blog.tls=true
             #- traefik.http.routers.blog.tls.certresolver=lets-encrypt
             #- traefik.port=80
+        depends_on:
+            - db
 
     ### DB (MariaDB) ###
     db:
@@ -57,6 +59,7 @@ services:
         deploy:
             placement:
                 constraints: [node.role == manager]
+
         secrets:
             - db_root_password
             - db_user
@@ -85,11 +88,11 @@ services:
             bash -c 'echo "$$MYSQL_CONFIG" > /etc/mysql/conf.d/my.cnf
             && chmod 555 /etc/mysql/conf.d/my.cnf
             && docker-entrypoint.sh mysqld'
-        healthcheck:
-            test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-            interval: 10s
-            timeout: 20s
-            retries: 10
+#        healthcheck:
+#            test: [ "CMD", "mysqladmin -u root -p$$(cat $$MYSQL_ROOT_PASSWORD_FILE) ping -h localhost" ]
+#            interval: 10s
+#            timeout: 20s
+#            retries: 10
 
     ### Redis ###
     redis:
